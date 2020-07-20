@@ -11,15 +11,15 @@
             <a class="navbar-brand" href="#">AUTH</a>
             
             <ul class="navbar-nav ml-auto"><!--LEFT ALIGNMENT-->
-                <li class="nav-item">
+                <li class="nav-item logged-out" style="display: none;">
                     <a class="nav-link" href="#"data-toggle="modal" data-target="#signinModal">SIGN IN</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item logged-out" style="display: none;">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#signupModal"> <!--REFERS TO THE MODAL TO BE DISPLAYED-->
                         SIGN UP
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item logged-in" style="display: none;">
                     <a class="nav-link" id="logout" href="#">LOG OUT</a>
                 </li>
             </ul> 
@@ -79,9 +79,9 @@
                         <div class="form-group">
                             <input type="password" id="login-pass" class="form-control" placeholder="Password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <button type="submit" class="btn btn-secondary btn-block">Login</button>
                         <button type="button" class="btn btn-info btn-block" id="btn-google">Login with google</button>
-                        <button type="button" class="btn btn-secondary btn-block" id="btn-facebook">Facebook</button>
+                        <button type="button" class="btn btn-primary btn-block" id="btn-facebook">Facebook</button>
                     </form>
                 </div>
             </div>
@@ -107,13 +107,13 @@
     <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
-        // CREDENTIALS FIREBASE
+        //CONFIG OF CREDENTIALS FIREBASE
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     /*AUTH ALLOWS TO VALIDATE THE USERNAME AND PASSWORD TO BE STORE IN DATABASE-FIRESTORE*/
     const auth = firebase.auth();
-    const firestore = firebase.firestore();
+    const fs = firebase.firestore();
     </script>
 
     <!--CONEXION WITH MAIN.JS-->

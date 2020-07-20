@@ -1,3 +1,18 @@
+/**SHOWS AND HIDES THE BUTTONS  */
+const loggedOut = document.querySelectorAll('.logged-out');
+const loggedIn = document.querySelectorAll('.logged-in');
+
+/**USER TAKEN FROM THE EVENT-AUTH */
+const loginCheck = user => {
+    if (user) {
+        loggedIn.forEach(link => link.style.display = 'block');
+        loggedOut.forEach(link => link.style.display = 'none');
+    } else {
+        loggedIn.forEach(link => link.style.display = 'none');
+        loggedOut.forEach(link => link.style.display = 'block');
+    }
+}
+
 /**SIGNUP*/
 const authForm = document.querySelector('#signup-form');
 
@@ -53,12 +68,28 @@ logOut.addEventListener('click', (e) => {
 const btnGoogle = document.querySelector('#btn-google');
 btnGoogle.addEventListener('click', (e) => {
     e.preventDefault();
+    $("#signinModal").modal("hide");
 
     const provider = new firebase.auth.GoogleAuthProvider(); //REQUEST TO AUTHENTICATE WITH GOOGLE 
-    auth.signInWithPopup(provider) //SHOWS A WINDOW TO TRY SELECT A GOOGLE ACCOUNT
-        .then((result) => {
+    auth.signInWithPopup(provider).then((result) => { //SHOWS A WINDOW TO TRY SELECT A GOOGLE ACCOUNT
             console.log(result);
             console.log('google sign in');
+        })
+        .catch(err => {
+            console.log(err);
+        })
+});
+
+/**FACEBOOK LOGIN */
+const btnFacebook = document.querySelector('#btn-facebook');
+btnFacebook.addEventListener('click', e => {
+    e.preventDefault();
+    $("#signinModal").modal("hide");
+
+    const provider = new firebase.auth.FacebookAuthProvider();
+    auth.signInWithPopup(provider).then(result => {
+            console.log(result);
+            console.log('facebook sign in');
         })
         .catch(err => {
             console.log(err);
@@ -92,8 +123,10 @@ auth.onAuthStateChanged(user => {
             .get()
             .then((snapshot) => { /**snapshot STORES CHANGING DATA */
                 setupPosts(snapshot.docs); /**GETS THE LIST OF EXISTING COLLECTIONS*/
+                loginCheck(user); /**CALLS THE FUNCTION TO VERIFY IF THE USER IS SIGNING IN*/
             });
     } else {
         setupPosts([]); /**EMPTY ARRANGEMENT*/
+        loginCheck(user);
     }
 })
